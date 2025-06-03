@@ -31,7 +31,7 @@ To set up a PyCharm Run/Debug Configuration for your project, follow these steps
 - Click Run > Edit Configurations...
 - Click the + icon (Add New Configuration) and choose Python.
 - Configure the settings as follows:
-  - Name: getting_started_with_kafka_and_redis.
+  - Name: KafkaRedis_example.
   - Module name: Enter uvicorn.
   - Parameters: Enter app.main:app --reload.
   - Python interpreter: Select your project's virtual environment (e.g., env or env/bin/python).
