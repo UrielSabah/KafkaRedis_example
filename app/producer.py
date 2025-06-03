@@ -1,19 +1,23 @@
 from confluent_kafka import Producer
 import json
 
+from app.logger import setup_logger
+
+logger = setup_logger(__name__)
+
+
 producer = None
 
 def init_producer(config):
     global producer
     if not producer:
-        print("here")
         producer = Producer(config)
 
 def delivery_report(err, msg):
     if err is not None:
-        print(f"❌ Delivery failed: {err}")
+        logger.info(f"❌ Delivery failed: {err}")
     else:
-        print(f"✅ Message delivered to {msg.topic()} [{msg.partition()}]")
+        logger.info(f"✅ Message delivered to {msg.topic()} [{msg.partition()}]")
 
 def send_event(topic: str, event: dict):
     value = json.dumps(event)

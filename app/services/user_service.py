@@ -3,6 +3,9 @@ import json
 import asyncio
 import random
 from app.config import redis_client
+from app.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 
 async def fetch_from_db(user_id: int) -> dict:
@@ -20,10 +23,10 @@ async def get_user_action(user_id: int) -> dict:
     cached = await redis_client.get(cache_key)
 
     if cached:
-        print("✅ Redis: Cache hit")
+        logger.info("✅ Redis: Cache hit")
         user_data = json.loads(cached)
     else:
-        print("📦 Redis: Cache miss → DB fallback")
+        logger.info("📦 Redis: Cache miss → DB fallback")
         user_data = await fetch_from_db(user_id)
         await redis_client.setex(cache_key, 60, json.dumps(user_data))
 

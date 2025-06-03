@@ -7,6 +7,7 @@ from app.consumer import consume_events
 from app.config import init_redis, close_redis, load_kafka_config, settings
 from app.services.user_service import get_user_action
 from app.models import Event  # Import the Pydantic model
+from app.logger import setup_logger
 
 
 @asynccontextmanager
@@ -17,6 +18,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+logger = setup_logger("main")
 
 KAFKA_TOPIC = settings.kafka_topic
 KAFKA_CONFIG = load_kafka_config()
